@@ -1,58 +1,211 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inventario de Depresión de Beck</title>
-    <link rel="stylesheet" href="beck.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="theme-color" content="#f97316">
+  <title>🐾 Placa Mascota — Max</title>
+  <link rel="stylesheet" href="pet-style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Nunito+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
-    <div class="container">
-        <div class="card">
-            <h1>Inventario de Depresión de Beck</h1>
-            <p class="subtitle">Por favor, completa tu información y selecciona la opción que mejor describes cómo te has sentido esta última semana.</p>
-            
-            <!-- Sección de datos del paciente -->
-            <div class="patient-info-section">
-                <h3>Información del Paciente</h3>
-                <div class="form-group">
-                    <label for="nombre">Nombre Completo:</label>
-                    <input type="text" id="nombre" placeholder="Ingresa tu nombre completo" required>
-                </div>
-                <div class="form-group">
-                    <label for="identificacion">Número de Identificación:</label>
-                    <input type="text" id="identificacion" placeholder="Ingresa tu número de cédula o identificación" required>
-                </div>
-            </div>
 
-            <!-- Barra de progreso -->
-            <div class="progress-section">
-                <p class="progress-text">Progreso: <span id="answered">0</span> de 21 preguntas respondidas</p>
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progressFill"></div>
-                </div>
-            </div>
+  <!-- BARRA TOP -->
+  <div class="top-bar">
+    <div class="top-inner">
+      <div class="top-left">
+        <span class="paw-spin">🐾</span>
+        <span id="top_text">¡Mi mascota!</span>
+      </div>
+      <div class="lang-btns">
+        <button class="lang-btn active" onclick="setLanguage('es')" id="btn_es">ES</button>
+        <button class="lang-btn" onclick="setLanguage('en')" id="btn_en">EN</button>
+      </div>
+    </div>
+  </div>
 
-            <!-- Contenedor de preguntas -->
-            <div id="questionsContainer" class="questions-container"></div>
+  <div class="page">
 
-            <!-- Resultado -->
-            <div class="result-section">
-                <div class="result-card">
-                    <p class="result-label">Puntuación Total:</p>
-                    <p class="result-score" id="totalScore">0</p>
-                    <p class="result-interpretation" id="interpretation">Completa todas las preguntas</p>
-                    <p class="result-warning" id="warningText" style="display: none;">⚠️ Una puntuación de 17 o más indica que puede necesitar ayuda profesional.</p>
-                </div>
-
-                <button id="sendBtn" class="send-button" disabled>
-                    📱 Enviar por WhatsApp
-                </button>
-                <p id="sendMessage" class="send-message">Completa todas las preguntas y tu información para enviar</p>
-            </div>
-        </div>
+    <!-- BANNER PERDIDO -->
+    <div class="lost-banner" id="lost_banner">
+      <span class="lost-icon">🔍</span>
+      <div class="lost-text">
+        <strong id="lost_title">¡ESTA ES MIMASCOTA!</strong>
+        <span id="lost_sub">Por favor contacta a su dueño</span>
+      </div>
     </div>
 
-    <script src="beck.js"></script>
+    <div class="card">
+
+      <!-- HEADER MASCOTA -->
+      <div class="pet-header">
+        <div class="pet-photo-wrap">
+          <img src="andy.webp" alt="Foto mascota"
+               class="pet-photo"
+               onerror="this.style.display='none';document.getElementById('photo_fallback').style.display='flex'">
+          <div class="photo-fallback" id="photo_fallback">
+            <span id="pet_emoji_fb">🐶</span>
+          </div>
+          <div class="photo-ring"></div>
+        </div>
+
+        <div class="pet-identity">
+          <div class="pet-type-badge" id="pet_type_badge">
+            <span>🐕</span> Perro
+          </div>
+          <h1 class="pet-name">Andy</h1>
+          <div class="pet-breed" id="breed_val">Labrador negro· Macho</div>
+          <div class="pet-age">
+            <i class="fa-solid fa-cake-candles"></i>
+            <span id="pet_age_val">8 años</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- DESCRIPCIÓN FÍSICA -->
+      <div class="section">
+        <div class="section-title">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <span id="sec_appearance">Descripción Física</span>
+        </div>
+        <div class="desc-grid">
+          <div class="desc-item">
+            <span class="desc-icon">🎨</span>
+            <div class="desc-content">
+              <span class="desc-label" id="color_label">Color / Pelaje</span>
+              <span class="desc-val">Pelo Negro,</span>
+            </div>
+          </div>
+          <div class="desc-item">
+            <span class="desc-icon">⚖️</span>
+            <div class="desc-content">
+              <span class="desc-label" id="weight_label">Peso aprox.</span>
+              <span class="desc-val">28 kg</span>
+            </div>
+          </div>
+          <div class="desc-item">
+            <span class="desc-icon">📏</span>
+            <div class="desc-content">
+              <span class="desc-label" id="size_label">Tamaño</span>
+              <span class="desc-val">Grande</span>
+            </div>
+          </div>
+          <div class="desc-item">
+            <span class="desc-icon">🏷️</span>
+            <div class="desc-content">
+              <span class="desc-label" id="chip_label">Microchip</span>
+              <span class="desc-val">No aplica</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SEÑAS PARTICULARES -->
+      <div class="section">
+        <div class="section-title title-amber">
+          <i class="fa-solid fa-star"></i>
+          <span id="sec_marks">Señas Particulares</span>
+        </div>
+        <p class="marks-text" id="marks_text">
+          Pelaje negro, pelo largo, mancha blanca en la pata delantera derecha. Collar azul con cascabel.
+          Muy amigable con personas y niños. Responde al nombre "Andy".
+        </p>
+      </div>
+
+      <!-- FOTOS GALERÍA (mini) -->
+      <div class="section">
+        <div class="section-title title-purple">
+          <i class="fa-solid fa-images"></i>
+          <span id="sec_gallery">Galería</span>
+        </div>
+        <div class="gallery-wrap" id="gallery">
+          <img src="a.jpg" alt="Max jugando">
+          <img src="b.jpg" alt="Max en casa">
+          <img src="c.jpg" alt="Max de frente">
+        </div>
+
+      <div class="divider-paw">
+        <span>🐾</span><span>🐾</span><span>🐾</span>
+      </div>
+
+      <!-- DUEÑO -->
+      <div class="section">
+        <div class="section-title title-orange">
+          <i class="fa-solid fa-house-chimney-user"></i>
+          <span id="sec_owner">Datos del Dueño</span>
+        </div>
+
+        <div class="owner-card">
+          <div class="owner-avatar">
+            <i class="fa-solid fa-user"></i>
+          </div>
+          <div class="owner-info">
+            <div class="owner-name">Ledy Sanjuanelo</div>
+            <div class="owner-address">
+              <i class="fa-solid fa-location-dot"></i>
+              <span id="address_val">Barrio Villa katanga, Soledad, Atlantico, Colombia</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- BOTONES DE CONTACTO -->
+        <div class="contact-btns">
+          <a href="tel:+573012344124" class="btn-contact btn-call">
+            <i class="fa-solid fa-phone"></i>
+            <div>
+              <span class="btn-label" id="call_label">Llamar al dueño</span>
+              <span class="btn-number">+57 3012344124</span>
+            </div>
+          </a>
+          <a href="https://wa.me/573012344124?text=Hola!%20Encontré%20a%20tu%20mascota%20Max%20🐾" target="_blank" class="btn-contact btn-whatsapp">
+            <i class="fa-brands fa-whatsapp"></i>
+            <div>
+              <span class="btn-label">WhatsApp</span>
+              <span class="btn-number">+57 3012344124</span>
+            </div>
+          </a>
+          <a href="tel:+573012344124" class="btn-contact btn-alt">
+            <i class="fa-solid fa-phone-volume"></i>
+            <div>
+              <span class="btn-label" id="alt_label">Número alternativo</span>
+              <span class="btn-number">+57 3004804521</span>
+            </div>
+          </a>
+        </div>
+
+        <!-- ENVIAR UBICACIÓN -->
+        <button class="btn-location" onclick="sendLocation()" id="loc_btn">
+          <i class="fa-solid fa-location-dot"></i>
+          <span id="loc_label">📍 Enviar mi ubicación al dueño</span>
+        </button>
+      </div>
+
+      <!-- RECOMPENSA (opcional) -->
+      <div class="reward-banner" id="reward_banner">
+        <span class="reward-icon">🏆</span>
+        <div>
+          <strong id="reward_title">¡Recompensa por devolución!</strong>
+          <span id="reward_text">El dueño agradece y recompensa tu ayuda</span>
+        </div>
+      </div>
+
+    </div><!-- /card -->
+
+    <!-- MAPA ZONA -->
+    <div class="map-hint" id="map_hint">
+      <i class="fa-solid fa-map-location-dot"></i>
+      <span id="map_text">Zona habitual: Barrio El Villa Katanga, Soledad, Atlantico</span>
+    </div>
+
+    <div class="footer">
+      <span id="footer_text">Placa Inteligente para Mascotas · MediQR</span>
+      <br><span style="color:#555">ID: PET-MAX-B4C1</span>
+    </div>
+
+  </div><!-- /page -->
+
+  <script src="pet-script.js"></script>
 </body>
 </html>
